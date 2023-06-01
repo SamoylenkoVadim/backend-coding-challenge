@@ -1,0 +1,7 @@
+version: "1"
+services:
+  app:
+    container_name: planner
+    build: .
+    ports:
+      - "8000:8000"
