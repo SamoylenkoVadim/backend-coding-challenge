@@ -65,3 +65,45 @@ in `planning.json`, which contains around 10k records.
   be perfect or 100% finished. Plan to spend no more than 2-3 hours on it.
 
 For any additional questions on the task please feel free to email us!
+
+
+## Installation
+#### Docker
+*You need to have installed Docker on your computer
+
+- Build Docker image
+```
+docker-compose build --no-cache
+```
+- Run application
+```
+docker-compose up 
+```
+- Open the app in a browser
+```
+http://0.0.0.0:8000/planner?id=4
+```
+
+#### Standalone run
+*Recommended python version is 3.8
+
+- Install dependencies
+```
+pip3 install -r requirements.txt
+```
+
+- Init Database
+```
+python3 init_db.py
+```
+
+- From root of the app run the command
+```
+uvicorn app:app --host 0.0.0.0 --port 8000
+```
+
+- Open the app in a browser
+```
+http://0.0.0.0:8000/planner?id=4
+```
+
