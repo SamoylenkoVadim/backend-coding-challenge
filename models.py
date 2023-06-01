@@ -11,6 +11,7 @@ class Talent(Base):
     id = Column(String, primary_key=True)
     talent_name = Column(String)
     talent_grade = Column(String)
+    booking_grade = Column(String)
     operating_unit = Column(String, nullable=False)
     office_city = Column(String)
     office_postal_code = Column(String, nullable=False)
@@ -38,6 +39,27 @@ class Client(Base):
     planners = relationship("Planner", backref="associated_client")
 
 
+class Skill(Base):
+    __tablename__ = 'skills'
+
+    id = Column(Integer, primary_key=True)
+    skill_name = Column(String)
+    skill_category = Column(String)
+
+    skill_associations = relationship('PlannerSkillAssociation', back_populates='skill')
+
+
+class PlannerSkillAssociation(Base):
+    __tablename__ = 'client_skill_association'
+
+    id = Column(Integer, primary_key=True)
+    planner_id = Column(String, ForeignKey('planners.id'))
+    skill_id = Column(Integer, ForeignKey('skills.id'))
+    mandatory = Column(Boolean, default=False)
+    planner = relationship('Planner', back_populates='planner_associations')
+    skill = relationship('Skill', back_populates='skill_associations')
+
+
 class Planner(Base):
     __tablename__ = 'planners'
 
@@ -53,3 +75,4 @@ class Planner(Base):
     client = relationship("Client", back_populates="planners", overlaps="associated_client")
     talent = relationship("Talent", back_populates="planners", overlaps="associated_talent")
     job_manager = relationship("JobManager", back_populates="planners", overlaps="associated_job_manager")
+    planner_associations = relationship('PlannerSkillAssociation', back_populates='planner')
